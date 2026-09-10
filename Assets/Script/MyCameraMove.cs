@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public partial class MyCameraMove : MonoBehaviour
@@ -25,13 +26,35 @@ public partial class MyCameraMove : MonoBehaviour
     private Player _player;
     private ECamera _mode;
 
+    [Header("마우스 회전 시점")]
+    [SerializeField] private float _mouseSensitivity = 2.0f;
+    [SerializeField] private float _pitchMin = -30.0f;
+    [SerializeField] private float _pitchMax = 70.0f;
+
+    private float _yaw;
+    private float _pitch;
 
 
     private void Start()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if(_playerObject == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
-        _personCamera = _camera.GetComponent<Transform>();
+        }
+        if(_playerObject != null)
+        {
+            _player = _playerObject.GetComponent<Player>();
+            _yaw = _playerObject.transform.eulerAngles.y;
+        }
+
+        if(_camera != null)
+        {
+            _personCamera = _camera.GetComponent<Transform>();
+
+        }
+
+        SetMode(_ecameraMode, true);
 
 
     }
@@ -53,6 +76,7 @@ public partial class MyCameraMove : MonoBehaviour
             SetMode(ECamera.ThirdPerson, _chageMode);
         }
 
+        MouseRotation();
         
     }
 
@@ -78,6 +102,21 @@ public partial class MyCameraMove : MonoBehaviour
 
     }
 
+
+    private void MouseRotation()
+    {
+        if(!Input.GetMouseButton(1))
+        {
+            return;
+        }
+
+        float mx = Input.GetAxis("Mouse X");
+        float my = Input.GetAxis("Mouse Y");
+        _yaw += mx * _mouseSensitivity;
+        _pitch -= my * _mouseSensitivity;
+        _pitch = Mathf.Clamp(_pitch, _pitchMin, _pitchMax);
+
+    }
 
 
 

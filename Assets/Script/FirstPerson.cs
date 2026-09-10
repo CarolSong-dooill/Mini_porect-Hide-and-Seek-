@@ -6,7 +6,8 @@ public partial class MyCameraMove
 {
     
     private Vector3 _firstCameraOffset = new Vector3(0f, 1.6f, 0.2f);
-    private bool _usefirstViewrotation = true;
+    private float _fisrtSharpness = 30f;
+
 
 
     private void InitFirstPose(bool snap)
@@ -15,18 +16,10 @@ public partial class MyCameraMove
         Quaternion desiredRot;
 
         desiredPos = _playerObject.transform.position + (_playerObject.transform.rotation * _firstCameraOffset);
+        desiredRot = _camera.rotation;
 
-        if (_usefirstViewrotation)
-        {
-            desiredRot = _playerObject.transform.rotation;
-        }
-
-        else
-        {
-            desiredRot = _camera.rotation;
-        }
-
-        ApplyPose(desiredPos, desiredRot, 15f, snap);
+        FirstHeadPose(out desiredPos, out desiredRot);
+        ApplyPose(desiredPos, desiredRot, _fisrtSharpness, snap);
     }
 
     private void FollowFirstPose()
@@ -34,29 +27,19 @@ public partial class MyCameraMove
         Vector3 desiredPos;
         Quaternion desiredRot;
 
-        desiredPos = _camera.position + (_playerObject.transform.rotation * _firstCameraOffset);
+        desiredPos = _playerObject.transform.position + (_playerObject.transform.rotation * _firstCameraOffset);
+        desiredRot = _camera.rotation;
 
-        if (_usefirstViewrotation)
-        {
-            desiredRot = _playerObject.transform.rotation;
-        }
-
-        else
-        {
-            desiredRot = _camera.rotation;
-        }
-
-        ApplyPose(desiredPos, desiredRot, 15f, false);
-
-
+        FirstHeadPose(out desiredPos, out desiredRot);
+        ApplyPose(desiredPos, desiredRot, _fisrtSharpness, false);
 
     }
 
-    private void MouseRotate()
+    private void FirstHeadPose(out Vector3 desiredPos, out Quaternion desiredRot)
     {
-        float mx = Input.GetAxis("Mouse X");
-        float my = Input.GetAxis("Mouse Y");
+        desiredRot = Quaternion.Euler(_pitch, _yaw, 0f);
 
+        desiredPos = _playerObject.transform.position + (desiredRot * _firstCameraOffset);
 
     }
 }

@@ -14,9 +14,9 @@ public class Player : MonoBehaviour
 
 
     [Header("이동")]
-    [SerializeField] private float _forwardSpeed = 5.0f;
+    [SerializeField] private float _forwardSpeed = 8.0f;
     private float _runAccel = 1.8f;
-    private float _rotatesharpness = 5.0f;
+    private float _rotatesharpness = 8.0f;
 
     [Header("점프")]
     private float _jumpHeight = 3.0f;
@@ -126,10 +126,10 @@ public class Player : MonoBehaviour
             
         }
 
-        Vector3 velociry = playerPos * runSpeed;
-        velociry.y = _zVel;
+        Vector3 velocity = playerPos * runSpeed;
+        velocity.y = _zVel;
 
-        _controller.Move(velociry * Time.deltaTime);
+        _controller.Move(velocity * Time.deltaTime);
 
         PlayerRotate(playerPos);
 
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
 
         Vector3 dir = camF * playerPos.z + camR * playerPos.x;
 
-        return dir.normalized;
+        return dir;
     }
 
     private void PlayerRotate(Vector3 playerPos)
