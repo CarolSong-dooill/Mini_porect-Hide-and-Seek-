@@ -22,7 +22,6 @@ public partial class MyCameraMove : MonoBehaviour
 
 
     private Transform _personCamera;
-    private NPC _npcCamera;
     private Player _player;
     private ECamera _mode;
 
@@ -80,25 +79,6 @@ public partial class MyCameraMove : MonoBehaviour
     }
 
 
-
-    private void InitPose(bool snap)
-    {
-        if(_player == null)
-        {
-            return;
-        }
-
-    }
-
-    private void FollowPose()
-    {
-
-        if (_player == null)
-        {
-            return;
-        }
-
-    }
 
 
     private void ApplyPose(Vector3 desiredPos, Quaternion desiredRot, float sharpness, bool snap)

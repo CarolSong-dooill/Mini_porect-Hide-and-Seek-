@@ -5,7 +5,7 @@ using UnityEngine;
 public partial class MyCameraMove 
 {
     
-    private Vector3 _firstCameraOffset = new Vector3(0, 0f, 0.5f);
+    private Vector3 _firstCameraOffset = new Vector3(0f, 1.6f, 0.2f);
     private bool _usefirstViewrotation = true;
 
 
@@ -14,7 +14,7 @@ public partial class MyCameraMove
         Vector3 desiredPos;
         Quaternion desiredRot;
 
-        desiredPos = _camera.position + (_playerObject.transform.rotation * _firstCameraOffset);
+        desiredPos = _playerObject.transform.position + (_playerObject.transform.rotation * _firstCameraOffset);
 
         if (_usefirstViewrotation)
         {
